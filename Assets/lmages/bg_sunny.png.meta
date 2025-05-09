@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      bg_sunny_0: -4941260671020873749
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

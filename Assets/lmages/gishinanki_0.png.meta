@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      gishinanki_0_0: 818653905628580822
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      bg_rainy_0: 1553770797695141245
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
