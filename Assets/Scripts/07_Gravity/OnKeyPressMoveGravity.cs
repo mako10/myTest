@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // キーを押すと、移動する（ジャンプ版）
-public class OnKeyPressMoveGravity : MonoBehaviour 
+public class OnKeyPressMoveGravity : MonoBehaviour
 {
-	//-------------------------------------
+    //-------------------------------------
     public InputKey jumpKey = InputKey.Jump; // プルダウンメニューで選択するキー
     public float speed = 5f; //［スピード］
     public float jumppower = 8f; //［ジャンプ力］
@@ -13,29 +13,37 @@ public class OnKeyPressMoveGravity : MonoBehaviour
     public float footOffset = 0.01f; //［足元位置のオフセット］
     //-------------------------------------
     Rigidbody2D rbody;
+    Animator animator; // 追加
     float vx = 0;
     bool leftFlag;
     bool isGrounded;
     bool isJumping = false;
 
-    void Start() 
+    void Start()
     {
         rbody = GetComponent<Rigidbody2D>();
         rbody.constraints = RigidbodyConstraints2D.FreezeRotation;
+        animator = GetComponent<Animator>(); // 追加
     }
 
-    void Update() 
+    void Update()
     {
         // 左右キーで移動
         vx = 0;
         vx = Input.GetAxisRaw("Horizontal") * speed;
 
-        if (vx != 0) 
+        if (vx != 0)
         {
             leftFlag = vx < 0;
         }
         rbody.linearVelocity = new Vector2(vx, rbody.linearVelocity.y);
         GetComponent<SpriteRenderer>().flipX = leftFlag;
+
+        // アニメーション制御
+        if (animator != null)
+        {
+            animator.SetBool("isMoving", vx != 0); // 追加
+        }
 
         // 足の下が何かに触れているかを調べる
         float myHeight = GetComponent<Collider2D>().bounds.extents.y;
@@ -44,12 +52,12 @@ public class OnKeyPressMoveGravity : MonoBehaviour
         isGrounded = Physics2D.Raycast(startRay, Vector2.down, checkDistance);
 
         // ジャンプキーが押されて、着地していて、ジャンプ中でなければジャンプ
-        if (Input.GetButtonDown(jumpKey.ToString()) && isGrounded && !isJumping) 
+        if (Input.GetButtonDown(jumpKey.ToString()) && isGrounded && !isJumping)
         {
             isJumping = true;
             rbody.AddForce(new Vector2(0, jumppower), ForceMode2D.Impulse);
         }
-        if (rbody.linearVelocity.y <= 0) 
+        if (rbody.linearVelocity.y <= 0)
         {
             isJumping = false; // 上昇をやめたらジャンプ中を解除
         }
