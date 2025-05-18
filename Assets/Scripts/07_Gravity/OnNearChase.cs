@@ -13,6 +13,7 @@ public class OnNearChase : MonoBehaviour
 	//-------------------------------------
     Rigidbody2D rbody;
     bool flipFlag = false;
+    Animator animator; // 追加
 
 	void Start()
     {
@@ -22,6 +23,7 @@ public class OnNearChase : MonoBehaviour
             rbody.gravityScale = 0; // 重力を無効にする
         }
         rbody.constraints = RigidbodyConstraints2D.FreezeRotation;
+        animator = GetComponent<Animator>(); // 追加
     }
 
     void FixedUpdate()
@@ -60,5 +62,13 @@ public class OnNearChase : MonoBehaviour
         }
         SpriteRenderer sprite = GetComponent<SpriteRenderer>();
         sprite.flipX = flipFlag;
+
+        // アニメーション制御（追加）
+        if (animator != null)
+        {
+            // 速度がほぼ0でなければ移動中とみなす
+            bool isMoving = Mathf.Abs(rbody.linearVelocity.x) > 0.01f || Mathf.Abs(rbody.linearVelocity.y) > 0.01f;
+            animator.SetBool("isMoving", isMoving);
+        }
     }
 }
